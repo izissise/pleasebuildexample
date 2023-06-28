@@ -1,0 +1,6 @@
+[please]
+version = 17.1.0
+selfupdate = false
+
+[build]
+lang = C

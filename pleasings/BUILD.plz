@@ -1,0 +1,6 @@
+
+filegroup(
+    name = basename(package_name()),
+    srcs = ["utils.please_defs"],
+    visibility = ['PUBLIC'],
+)

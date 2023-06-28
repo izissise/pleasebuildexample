@@ -1,0 +1,24 @@
+subinclude("//pleasings")
+
+linux = subdir_target(
+    directory = 'linux'
+)
+
+firmware = subdir_target(
+    directory = 'firmware'
+)
+
+#firmware = subtargets(firmware)
+firmware = {
+    'BOOT': [f'{firmware}|BOOT'],
+}
+
+filegroup(
+    name = basename(package_name()),
+    visibility = ['PUBLIC'],
+    srcs = {
+        'LINUX': [linux]
+    } | {
+        f'FIRMWARE_{k}': v for k, v in firmware.items()
+    }
+)

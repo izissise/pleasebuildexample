@@ -1,0 +1,24 @@
+subinclude("//pleasings")
+
+CONFIG.setdefault("BOARD", "rpi4")
+
+board = subdir_target(
+    directory = join_path('boards', CONFIG.BOARD),
+)
+#board = subtargets(board)
+board = {
+    'LINUX': [f'{board}|LINUX'],
+    'FIRMWARE_BOOT': [f'{board}|FIRMWARE_BOOT'],
+}
+
+uki = uki_assemble(
+    name = 'uki',
+    base = board.LINUX,
+    boot = board.FIRMWARE_BOOT,
+)
+
+filegroup(
+    name = 'example',
+    visibility = ['PUBLIC'],
+    srcs = [uki],
+)

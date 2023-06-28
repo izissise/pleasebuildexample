@@ -1,0 +1,8 @@
+genrule(
+    name = basename(package_name()),
+    visibility = ['PUBLIC'],
+    outs = {
+        'BOOT': ['firm.hex'],
+    },
+    cmd = 'echo "boot" > "$OUTS_BOOT"'
+)

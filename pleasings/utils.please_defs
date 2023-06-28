@@ -1,0 +1,28 @@
+
+def subdir_target(directory:str='', target:str=None):
+    cd = get_base_path()
+    cd = cd if cd else ''
+    if cd:
+        namespace = f'@//{cd}/{directory}' if directory else cd
+    else:
+        namespace = f'@//{directory}' if directory else cd
+    target = f':{target}' if target else ''
+    return f'{namespace}{target}'
+
+def subtargets(target:str) -> dict:
+    return { k: [ f'{target}|{k}' ] for k in get_named_outs(target).keys() }
+
+def uki_assemble(name:str, base, boot):
+    return genrule(
+        name = name,
+        visibility = ['PUBLIC'],
+        srcs = {
+            'BASE': base,
+            'BOOT': boot,
+        },
+        outs = ['filenames'],
+        cmd = """
+            echo "$SRCS_BASE" >> "$OUTS"
+            echo "$SRCS_BOOT" >> "$OUTS"
+        """
+    )

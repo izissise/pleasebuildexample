@@ -1,0 +1,8 @@
+genrule(
+    name = basename(package_name()),
+    visibility = ['PUBLIC'],
+    outs = {
+        'LINUX': ['vmzlinux'],
+    },
+    cmd = 'echo "vmzlinux" > "$OUTS_LINUX"'
+)
